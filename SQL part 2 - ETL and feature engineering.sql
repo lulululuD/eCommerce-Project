@@ -49,15 +49,6 @@ where o.user_id in (
 
 -- create a new column 'target', target variable for the model
 -- target =1 when (user_id, product_id) of model_data in (user_id, product_id) of train data
---select *,
---	   case when (user_id, product_id) in (
---							select user_id, product_id
---							from "Ecommerce_Project".orders o
---							join "Ecommerce_Project".order_products_train t
---							on o.order_id = t.order_id) then 1
---			else 0
---		end as target							
---from model_data
 
 -- Add the 'target' column to the model_data table
 alter table model_data
@@ -228,8 +219,21 @@ where upv.product_id = model_data.product_id and upv.user_id = model_data.user_i
 -- if I use join model_data on uv.user_id = model_data.user_id , sql cannot update because it can distinguish between table name and join table name
 -- ERROR:  table name "model_data" specified more than once
 
---\copy model_data TO 'C:/Users/shenl/OneDrive/Documents/eCommerce DS project/model_data.csv' WITH CSV HEADER
+
+-- save the dataset 'model_data' which will be used in part 3 modeling process
+copy model_data TO 'C:/Users/shenl/OneDrive/Documents/eCommerce DS project/model_data.csv' WITH CSV HEADER
 -- run above code at psql environment in order to save the dataframe
+
+
+
+
+
+
+
+
+
+
+
 --------------------------------------
 -- update model_data by join products dataset 
 -- get some information about department information
@@ -243,11 +247,5 @@ where upv.product_id = model_data.product_id and upv.user_id = model_data.user_i
 
 
 
-
---------------------------------------
---select *
---from model_data 
---join "Ecommerce_Project".products p
---on model_data.product_id = p.product_id
 
 
